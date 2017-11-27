@@ -19,11 +19,10 @@ I only tested in Chrome, but I think it should work on any browser that supports
 Clone the repo and start a local server on your project root folder.
 
 Example:
-If you have php installed type this in terminal:
-`php -S localhost:8000`
 
-If not, try installing a server extension on your chrome browser:
-[example](https://www.youtube.com/watch?v=AK6swHiPtew)
+If you have php installed type this in terminal: `php -S localhost:8000`
+
+If not, try installing a [server extension](https://www.youtube.com/watch?v=AK6swHiPtew) on your chrome browser.
 
 
 ## Trying stuff around
@@ -31,7 +30,7 @@ If not, try installing a server extension on your chrome browser:
 There is absolutely no documentation except for a few comments that wont make your life easier.
 You should know the basics on how a 3d render engine works. May God guide you through this code...
 
-While developing, load the "editor" (the main `index.html` file) and play around with Maquina.js and PropsCamera.js files, which is where everything happens.
+While developing, load the "editor" (the main `index.html` file) and play around with `Maquina.js` and `PropsCamera.js` files, which is where everything happens.
 
 ## Deploy
 
