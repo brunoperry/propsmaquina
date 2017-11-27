@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>P.M - DEV</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=660,user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script type="text/javascript" src="js/Utils.js"></script>
+    <script type="text/javascript" src="js/BezierCurve.js"></script>
+    <script type="text/javascript" src="js/AudioSource.js"></script>
+    <script type="text/javascript" src="js/AudioDebug.js"></script>
+    <script type="text/javascript" src="js/resources.json.js"></script>
+    <script type="text/javascript" src="js/Resources.js"></script>
+    <script type="text/javascript" src="js/Object3D.js"></script>
+    <script type="text/javascript" src="js/Pump.js"></script>
+    <script type="text/javascript" src="js/Maquina.js"></script>
+    <script type="text/javascript" src="js/Color.js"></script>
+    <script type="text/javascript" src="js/FBXLoader.js"></script>
+    <script type="text/javascript" src="js/OBJModel.js"></script>
+    <script type="text/javascript" src="js/IndexedModel.js"></script>
+    <script type="text/javascript" src="js/Mat4.js"></script>
+    <script type="text/javascript" src="js/Vec4.js"></script>
+    <script type="text/javascript" src="js/Vertex.js"></script>
+    <script type="text/javascript" src="js/Edge.js"></script>
+    <script type="text/javascript" src="js/Transform.js"></script>
+    <script type="text/javascript" src="js/Camera.js"></script>
+    <script type="text/javascript" src="js/PropsCamera.js"></script>
+    <script type="text/javascript" src="js/PropsTyper.js"></script> 
+    <script type="text/javascript" src="js/ParticlesSystem.js"></script> 
+    <script type="text/javascript" src="js/Quaternion.js"></script>
+    <script type="text/javascript" src="js/Gradients.js"></script>
+    <script type="text/javascript" src="js/Display.js"></script>
+    <script type="text/javascript" src="js/Texture.js"></script>
+    <script type="text/javascript" src="js/Bitmap.js"></script>
+    <script type="text/javascript" src="js/Mesh.js"></script>
+    <script type="text/javascript" src="js/RenderContext.js"></script>
+    <script type="text/javascript" src="js/Timeline.js"></script> 
+    <script type="text/javascript" src="js/UI.js"></script>  
+    <script type="text/javascript" src="js/main.js"></script>     
+</head>
+<body>
+    <div id="canvas-container">
+    </div>
+     
+    <div id="loader">
+        <div class="background"></div>
+        <h1>LOADING: </h1>
+    </div>
+     <div id="menu">
+        
+        <div class="collapsable" onclick="ui.showHideFX(this)">
+            <div class="button-label">FXs</div>
+            <div id="fx-container">
+                <div class="button-label" onclick="ui.gotoFX(0)">FX01</div>
+                <div class="button-label" onclick="ui.gotoFX(1)">FX02</div>
+                <div class="button-label" onclick="ui.gotoFX(2)">FX03</div>
+                <div class="button-label" onclick="ui.gotoFX(3)">FX04</div>
+                <div class="button-label" onclick="ui.gotoFX(4)">FX05</div>
+                <div class="button-label" onclick="ui.gotoFX(5)">FX06</div>
+                <div class="button-label" onclick="ui.gotoFX(6)">FX07</div>
+                <div class="button-label" onclick="ui.gotoFX(7)">FX08</div>
+                <div class="button-label" onclick="ui.gotoFX(8)">FX09</div>
+                <div class="button-label" onclick="ui.gotoFX(9)">FX10</div>
+                <div class="button-label" onclick="ui.gotoFX(10)">FX11</div>
+                <div class="button-label" onclick="ui.gotoFX(11)">FX12</div>
+                <div class="button-label" onclick="ui.gotoFX(12)">FX13</div>
+            </div>
+        </div>
+        <div class="button-label" onclick="ui.toggleFullscreen(this)">FULLSCREEN</div>
+        <div class="button-label" onclick="ui.toggleCurve(this)">CURVE</div>
+        <div class="button-label" onclick="ui.toggleAnalyser(this)">ANALYSER</div>
+        <div class="button-label" onclick="ui.reload()">RELOAD</div>
+        <div id="controls-container">
+            <div id="play-stop-button" onclick="ui.playStop(this)">
+                <svg width="32" height="32">
+                    <polygon style="fill:var(--grey-3)" points="8,8 26,16 8,26"/>
+                </svg>     
+            </div> 
+
+            <div id="volume-button">
+                <input id="volume-input" type="range" oninput="ui.onVolumeChange(this.value);" onchange="ui.onVolumeChange(this.value);">
+                <div id="volume-background"></div>
+                <span>VOLUME 100%</span>
+            </div>
+        </div>
+    </div>
+    <div id="freq">
+        <div id="equalizer-container">
+            <canvas id="equalizer" width="3000"></canvas>
+        </div>
+        <div id="freq-controls">
+             <label>value:</label><span id="analyser-value"></span>
+             <label>src:</label><input type="text" maxlength="2" value="0"> 
+             <label>freq:</label><input type="text" maxlength="1024" value="1"> 
+             <div class="button-label" onclick="ui.updateAnalyser(this.parentElement)">UPDATE</div>
+        </div>
+    </div>
+    <div id="menu-button" onclick="ui.showHideMenu(this)">M</div>
+    <div id="console">
+        <div class="textarea"></div>
+        
+        <label onclick="ui.showHideConsole(this)">CONSOLE:</label>
+    </div> 
+    
+</body>
+</html>
