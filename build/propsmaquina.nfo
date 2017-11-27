@@ -1,0 +1,59 @@
+███████████████████████████████████████████████████████████████████████████████
+███████████████████████████████████████████████████████████████████████████████
+█████████░░░▒████░░░▓███░░░░░░░░░░░░████░░░░░░░░░░░░████▒░░░░░░░░░▓▓███████████
+█████████░░░░░███░░░░███░░░▓████▒░░░████▒░░░███░░░░░▒███░░░░░░░░░░░░███████████
+████████▓░░░░░░▒█░░░░███░░░▒████████████▒░░░█████░░░░███░░░▓█████░░░███████████
+████████░░░░░░░░░░░░░███░░░░░░░░░░░░████▓░░░▒████░░░░███░░░▒███████████████████
+████████░░░░█▓░░░░░░░██████▓████░░░░████▓░░░░▒███░░░░███░░░░████▓░░░░██████████
+████████░░░░███░░░░░░█▒█░░░░█▓▒░░░░░████░░░░░░░░░░░░░███░░░░░░░░░░░░░██████████
+████████░░░▓████░░░░░▒▒█░░░░░░░░░░░█▒▒▒██░░░░░░░░░░░█▓▒▒░░░░░░░░░░░░░██████████
+███████████████████████████████████████████████████████████████████████████████
+███████████████████████████████████████████████████████████████████████████████
+████████████████████████████ NORTE SUL DEMO CREW ██████████████████████████████
+███████████████████████████████████cc~EviL█████████████████████████████████████
+███████████████████████████████████████████████████████████████████████████████
+███████████████████████████████████████████████████████████████████████████████
+
+TITLE: 		PROPS MÁQUINA
+TYPE: 		WILD
+CODE & GFX: 	cc2017 (aka coxosclassic)
+MUSIC & SFX:	EviL
+REQS:		- Tested in Chrome version 62.0 (good luck with other browsers)
+		- Start a local server otherwise it won’t run (throws security error)
+		  follow this link to setup a local server if you don’t know how:
+		  https://www.youtube.com/watch?v=AK6swHiPtew 
+SPECS:		Javascript software render engine, Cubic Bezier animated curves,
+		Javascript Audio API (for audio analysis and animations), 
+		.OBJ model format support, …
+KNOWN BUGS:	- Transparent pixel on transparent pixel (z-buffer), fucks up…
+		- Changing resolutions mid demo, fucks up…
+		- On “GR8” resolution you need a proper CPU… otherwise, fucks up…
+		- On “SHIT” resolution the letters come off the canvas… Thats why
+		  is shit…
+		
+
+NOTES:		After looking up some old files on some old drives, I came across
+		a track (techno_nigga) that EviL made way back ago (maybe 10 years?!). 
+		I was carrying this idea for a demo since the day EviL showed me
+		the music but I never made a true attempt at going for it (or for 
+		any other demo). Its really hard to get everything together, 
+		time and knowledge are hard to combine!
+		Anyways, I had some free time and decided to give it a try.
+		After roughly 2 months I worked on it on my spare time, and 
+		amazingly I got something working.
+		Its different from what I really imagined the first time I 
+		listened to Evil’s track, but its the closest I could get from 
+		that first “vision”.
+		There was also a rumor of Inércia Demoparty 2017 going, so I spoke
+		with EviL and we decided to try our luck at it, but unfortunately the
+		party was called off and this Wild (would be) entry dropped down 
+		to oblivion… 
+
+		There is a lot to improve (specially on the z-buffer, performance)
+		and a lot of tweaking left to be done (specially on transitions).
+		I would also like to include other stuff in the engine such as
+		FBX (ascii) support, skinning animation, physics, threads… Keeping
+		the software render technique.
+ 
+		I thought doing this demo an extremely difficult task, but at the same
+		time I had a lot of fun putting together everything I’ve been learning.

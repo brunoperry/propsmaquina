@@ -1,0 +1,227 @@
+html, body {
+
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    image-rendering: pixelated;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 1.5s;
+}
+
+#canvas-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    color: #dddddd;
+}
+
+h2 {
+    color: #dddddd;
+    font-weight: 100;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+h3 {
+    
+    position: relative;
+    display: block;
+    width: 100%;
+    color: #A6A2A2;
+    text-align: center;
+}
+
+span {
+
+    position: relative;
+    display: block;
+    width: 100%;
+    color: #A6A2A2;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+button {
+
+    position: relative;
+    display: block;
+    padding: 20px;
+    margin: 10px 0;
+    font-size: 20px;
+    border: none;
+    background: #dddddd;
+    color: #121212;
+    cursor: pointer;
+}
+button:focus {outline:0;}
+button:hover {opacity:0.6;}
+
+input[type="range"] {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    touch-action: manipulation;
+}
+
+.active, button:active {
+    background: #4F4F4F;
+    color: #dddddd;
+}
+
+#menu {
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+    z-index: 9999;
+    background: #121212;
+    padding: 0 20px;
+}
+
+.menu-container {
+    
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+#loader {
+    position: absolute;
+    display: none;
+    flex: 1;
+    width: 90%;
+}
+
+#background {
+
+    position: relative;
+    display: block;
+    width: 0%;
+    height: 64px;
+    background-color: white;
+}
+
+#overlay {
+
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* components */
+#volume-button {
+    
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    max-height: 64px;
+    margin: 10px 0;
+}
+
+#volume-button label {
+    
+    position: absolute;
+    line-height: 64px;
+    top: 0;
+    left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    pointer-events: none;
+    text-align: left;
+    color: #dddddd;
+}
+
+#volume-background {
+    
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    pointer-events: none;
+    background-color: #4F4F4F;
+}
+
+#quality-buttons {
+
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+#quality-buttons button {
+    
+    padding: 0;
+    margin: 0;
+}
+
+.radio-button {
+
+    position: relative;
+    display: block;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: transparent;
+    border: 5px solid #4F4F4F;
+    font-size: 16px;
+    text-align: center;
+    padding: 0;
+    color: #dddddd;
+}
+
+.radio-button-active {
+
+    position: relative;
+    display: block;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #4F4F4F;
+    font-size: 16px;
+    text-align: center;
+    padding: 0;
+    color: #dddddd;
+}
+
+.shit {
+     transform: scale(3,3);
+}
+.fair {
+    transform: scale(2,2);
+}
+.cool {
+    transform: scale(1,1);
+}
+

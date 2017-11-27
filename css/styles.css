@@ -1,0 +1,337 @@
+:root {
+    --grey-1: #dddddd;
+    --grey-2: #8c8c8c;
+    --grey-3: #2f2f2f;
+    --red-1: rgba(255,0,0,0.5);
+    --yellow-1: #e5bd15;
+    --green-1: #00c229;
+    --button-f-size: 16px;
+    --button-f-weight: bold;
+    --button-l-height: 32px;
+    --height-value: 32px;
+}
+html, body {
+
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    image-rendering: pixelated;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#demo-canvas {
+    transform: scale(2,2);
+}
+
+#debug_c {
+
+    display: block;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    z-index: 9999;
+}
+
+#menu {
+
+    position: absolute;
+    display: none;
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--red-1);
+    padding: 20px;
+}
+
+h2 {
+
+    color: white;
+    font-weight: 100;
+    font-size: 20px;
+}
+
+button {
+
+    position: relative;
+    display: block;
+    padding: 20px;
+    margin: 10px 0;
+}
+
+#replay {
+    display: none;
+}
+
+h1 {
+    color: white;
+    text-transform: uppercase;
+}
+
+ input[type="range"] {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    touch-action: manipulation;
+}
+
+#menu {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--height-value);
+    flex-direction: row;
+    background: var(--grey-2);
+} 
+
+
+#loader {
+    position: absolute;
+    display: block;
+    flex: 1;
+    width: 90%;
+}
+
+.background {
+
+    position: relative;
+    display: block;
+    width: 0%;
+    height: var(--height-value);
+    background-color: white;
+}
+
+ .fx-container {
+    position: absolute;
+    display: none;
+    min-width: 100px;
+    background: var(--grey-1);
+}
+
+.fx-container button{
+    padding: 5px;
+}
+
+.collapsable {
+
+    min-width: 100px;
+    background: var(--green-2);
+}
+
+.button-label {
+
+    position: relative;
+    display: block;
+    border: none;
+    background: none;
+    margin-right: 20px;
+    padding: 0 10px;
+    font-size: var(--button-f-size);
+    font-weight:var(--button-f-weight);
+    line-height:var(--button-l-height);
+    text-align: left;
+    cursor: pointer;
+}
+.button-label:hover, .collapsable:hover {
+    background: var(--red-1);
+} 
+
+#controls-container {
+
+    position: relative;
+    display: flex;
+    width: 232px;
+    float: right;
+    margin-left: auto;
+}
+
+#play-stop-button {
+
+    position: relative;
+    display: block;
+    max-width: var(--height-value);
+    max-height: var(--height-value);
+    margin-left: 5px;
+    cursor: pointer;
+    flex: 1
+}
+
+#volume-button {
+    
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+#volume-button span {
+    position: absolute;
+    line-height: var(--height-value);
+    top: 0;
+    font-size: 12px;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+#volume-background {
+    
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    pointer-events: none;
+    background-color: #4F4F4F;
+}
+
+#fx-container {
+
+    position: relative;
+    display: none;
+    background: var(--grey-2);
+}
+
+#fx-container .button-label {
+    margin-right: 0;
+}
+
+#freq {
+    position: fixed;
+    display: none;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+}
+#equalizer {
+    position: relative;
+    display: block;
+}
+#equalizer-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow-x: scroll;
+}
+#freq-controls {
+
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    height: 32px;
+    background: var(--grey-2);
+}
+#freq-controls label {
+
+    color: var(--grey-3);
+    line-height: var(--height-value);
+    margin: 0 5px;
+    font-weight: bold;
+    font-size: 10px;
+}
+#freq-controls input[type="text"] {
+
+    color: var(--grey-3);
+    line-height: var(--height-value);
+    font-weight: bold;
+    font-size: 16px;
+    max-width: 64px;
+}
+#freq-controls span {
+    color: var(--grey-3);
+    line-height: var(--height-value);
+    font-weight: bold;
+    font-size: 16px;
+    text-align: right;
+}
+#freq-controls .button-label {
+    margin: 0;
+}
+
+#console {
+
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 0;
+    padding: 0 10px;
+    max-height: 32px;
+    height: 100%;
+    background: rgba(255,0,0,0.2);
+    width: auto;
+    font-size: 11px;
+    color: white;
+    z-index: 9999;
+}
+
+#console label {
+
+    position: relative;
+    display: block;
+    line-height: var(--height-value);
+    font-weight: bold;
+    font-size: 12px;
+    bottom: 0;
+    color: black;
+    cursor: pointer;
+}
+
+#console .textarea {
+
+    position: relative;
+    display: none;
+    width: 100%;
+    background: none;
+    border: none;
+    resize: none;
+    padding: 10px 0;
+    max-height: 204px;
+    color: white;
+    font-size: 12px;
+    vertical-align: bottom;
+    overflow-y: scroll;
+}
+
+#console .textarea span {
+
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+#menu-button {
+    position: fixed;
+    display: block;
+    width: 32px;
+    height: 32px;
+    bottom: 0;
+    right: 0;
+    background: var(--red-1);
+    opacity: 0.2;
+    cursor: pointer;
+    line-height: 32px;
+    text-align: center;
+} 
+
+.shit {
+     transform: scale(3,3);
+}
+.fair {
+    transform: scale(2,2);
+}
+.cool {
+    transform: scale(1,1);
+}
