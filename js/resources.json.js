@@ -144,12 +144,6 @@ var resourcesData = {
             url: "meshes/pump.obj"
         },
         {
-            id: 7,
-            type: "obj",
-            name: "pulsar",
-            url: "meshes/pulsar.obj"
-        },
-        {
             id: 8,
             type: "obj",
             name: "cube",
