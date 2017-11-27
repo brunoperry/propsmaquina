@@ -1,11 +1,14 @@
 # PROPS MÁQUINA
 
 ![alt text](https://raw.githubusercontent.com/brunoperry/propsmaquina/master/snapshot.jpg "P.M")
+
 3D Software Renderer Engine Demo. 
 
 ## Getting Started
 
+These instructions will get you a copy of the project up and running on your local machine to try stuff around. See deploy for notes on how to make the final html file.
 
+For further details, check this entry on [pouet](http://www.pouet.net/prod.php?which=72468);
 
 ### Prerequisites
 
@@ -30,7 +33,7 @@ You should know the basics on how a 3d render engine works. May God guide you th
 
 While developing, load the "editor" (the main `index.html` file) and play around with Maquina.js and PropsCamera.js files, which is where everything happens.
 
-## Deployment
+## Deploy
 
 I'm using uglifyjs to minimize the project into a single .js file (`build/pm.js`), and [this site](https://cssminifier.com/) to minify the final css (`build/styles_prod.css`).
 Then I copy/paste everything into the build/index.html `<style>` and `<script>` tags.
@@ -45,7 +48,7 @@ Then I copy/paste everything into the build/index.html `<style>` and `<script>` 
 
 ## Authors
 
-* **cc2017 (Bruno Perry)** - *Code and GFX* - [brunoperry.net](https://brunoperry.net)
+* **cc2017** - *Code and GFX* - [brunoperry.net](https://brunoperry.net)
 * **EviL** - *Music and SFX* - [glenz.org](http://glenz.org/)
 
 ## License
