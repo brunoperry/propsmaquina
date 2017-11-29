@@ -4,7 +4,7 @@ var loader;
 var display;
 var target;
 
-var autoPlay = true;
+var autoPlay = false;
 
 var animLoop = null;
 var isRunning = false;
@@ -25,10 +25,16 @@ var propsTyper;
 //DEBUG STUFF
 var DEBUG = false;
 var audioDebug;
+var fps;
+var now;
+var then = Timeline.time();
+var interval = 1000/30;
+var delta;
 var isEditing = true;
 // var debugCanvas;
 // var debugCtx;
 var debugAnalyserData;
+var screenRecorder;
 
 function init() {
 
@@ -39,10 +45,10 @@ function init() {
     loader = document.getElementById("loader");
     
     display = new Display({
-        view: document.getElementById("canvas-container"),
+        view: document.getElementById("canvas-container"), 
         w: 480,
         h: 320,
-        className: "fair"    
+        className: "fair" 
     });
     target = display.frameBuffer;
 
@@ -97,6 +103,15 @@ function startWild() {
     maquina = new Maquina(resources, target, onMaquina);
 
     audioDebug = new AudioDebug(maquina, onAudioDebug);
+    screenRecorder = new ScreenRecorder({
+        callback: onScreenRecorder,
+        display: display,
+        view: document.querySelector("#screen-recorder")
+    });
+
+    fps = new FPS({
+        view: document.getElementById("fps-label")
+    });
     
     camera = new PropsCamera(target, resources.getAudios());
     
@@ -122,28 +137,41 @@ function endWild() {
         
         toConsole("Wild Ended!", UI.Messages.SUCCESS);
     }, 500);
+
+    if(screenRecorder.isRecording) {
+        screenRecorder.stopRecording();
+    }
 }
 
 function loop() {
 
     if(!isRunning) return;
 
-    target.clear(0x00);
-    target.clearDepthBuffer();
+    now = Date.now();
+    delta = now - then;
+     
+    if (delta > interval) {
+        then = now - (delta % interval);
 
-    timeline.update();
+        target.clear(0x00);
+        target.clearDepthBuffer();
 
-    camera.update(timeline.tick);
+        timeline.update();
 
-    var vp = camera.getViewProjection();
-    maquina.update(timeline.tick, vp);
+        camera.update(timeline.tick);
 
-    if(isDebugSound && debugAnalyserData) {
-        audioDebug.debugSound(debugAnalyserData.src, debugAnalyserData.freq);
+        var vp = camera.getViewProjection();
+        maquina.update(timeline.tick, vp);
+
+        if(isDebugSound && debugAnalyserData) {
+            audioDebug.debugSound(debugAnalyserData.src, debugAnalyserData.freq);
+        }
+
+        display.swapBuffers();
+        propsTyper.update();
+        // fps.update(timeline.tick);
     }
 
-    display.swapBuffers();
-    propsTyper.update();
 
     if(DEBUG) {
         setTimeout(function() {
@@ -154,15 +182,32 @@ function loop() {
     }
 }
 
+function onScreenRecorder(data) {
+
+    switch(data.type) {
+        case ScreenRecorder.Actions.STOP_WILD:
+            if(isRunning) {
+                document.getElementById("play-stop-button").click();
+            }
+        break;
+        case ScreenRecorder.Actions.UPDATE_UI:
+            ui.toggleScreenRecordButton(data.value);
+        break;
+    }
+}
+
 function onKeyframe(id) {
 
     if(id === Resources.FX.FX12) {
         endWild();
     }
 
+    toConsole("FX" + id, UI.Messages.VERBOSE);
+
     camera.setCurrentFX(id);
     maquina.setCurrentFX(id);
     propsTyper.setCurrentFX(id);
+    screenRecorder.setCurrentFX(id);
 }
 
 function onUI(action, data) {
@@ -189,6 +234,14 @@ function onUI(action, data) {
             camera.setCurrentFX(data);
             maquina.setCurrentFX(data);
             break;
+        case UI.Actions.SCREEN_RECORD:
+            if(display.isRecording) {
+                screenRecorder.stopRecording();
+            } else {
+                screenRecorder.startRecording();
+            }
+            return screenRecorder.setToRecord;
+
         case UI.Actions.TOGGLE_WIREFRAME:
             isWireframe = !isWireframe;
             display.setOptions({
