@@ -1608,8 +1608,7 @@ class Maquina {
     }
 
     setVolume(vol) {
-
-        this.gainNode.gain.value = vol / 100;
+        this.gainNode.gain.setTargetAtTime(vol / 100, this.audioContext.currentTime, 0.015);
     }
 
     play() {

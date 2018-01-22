@@ -167,7 +167,7 @@ var resourcesData = {
         "**PROPS*MÁQUINA**",
         "EviL",
         "breakneck [RIP]",
-        "ps",
+        "psenough",
         "jeenio",
         "zeroshift",
         "v__pixelnerve",
@@ -177,9 +177,6 @@ var resourcesData = {
         "gr9yfox",
         "iq",
         "Navis",
-        "T.D.A",
-        "napalmcore",
-        "A.S.D",
         "SCENEPT"
     ],
     props2: "PROPS2:",

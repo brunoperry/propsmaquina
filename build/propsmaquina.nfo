@@ -18,18 +18,18 @@ TITLE: 		PROPS MÁQUINA
 TYPE: 		WILD
 CODE & GFX: 	cc2017 (aka coxosclassic)
 MUSIC & SFX:	EviL
-REQS:		- Tested in Chrome version 62.0 (good luck with other browsers)
+REQS:	- Tested in Chrome version 62.0 (good luck with other browsers)
 		- Start a local server otherwise it won’t run (throws security error)
 		  follow this link to setup a local server if you don’t know how:
 		  https://www.youtube.com/watch?v=AK6swHiPtew 
-SPECS:		Javascript software render engine, Cubic Bezier animated curves,
-		Javascript Audio API (for audio analysis and animations), 
-		.OBJ model format support, …
-KNOWN BUGS:	- Transparent pixel on transparent pixel (z-buffer), fucks up…
-		- Changing resolutions mid demo, fucks up…
-		- On “GR8” resolution you need a proper CPU… otherwise, fucks up…
-		- On “SHIT” resolution the letters come off the canvas… Thats why
-		  is shit…
+SPECS:	Javascript software render engine, Cubic Bezier animated curve,
+		Javascript Audio API (for audio analysis), 
+		.OBJ model format support, blah blah blah...
+KNOWN BUGS:	- Transparent pixel on transparent pixel (z-buffer), fucks up...
+		- Changing resolutions mid demo, fucks up...
+		- On “GR8” resolution you need a proper CPU(!) otherwise, fucks up...
+		- On “SHIT” resolution the letters come off the canvas. Thats why
+		  is shit...
 		
 
 NOTES:		After looking up some old files on some old drives, I came across
@@ -57,3 +57,6 @@ NOTES:		After looking up some old files on some old drives, I came across
  
 		I thought doing this demo an extremely difficult task, but at the same
 		time I had a lot of fun putting together everything I’ve been learning.
+
+		Props2: EviL for the inspiration and breakneck for showing/teaching me 
+		this stuff!

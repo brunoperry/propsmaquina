@@ -229,8 +229,8 @@ class Resources {
 
     createAudios(data, cb) {
 
-        this.callback(Resources.state.LOADING_AUDIO);
         var totalAudios = data.length;
+        this.callback(Resources.state.LOADING_AUDIO + " (1/" + totalAudios + ")");
         var counter = 0;
         var instance = this;
         for (var i = 0; i < data.length; i++) {
@@ -240,6 +240,7 @@ class Resources {
                 instance.audioContext.decodeAudioData(loadedData, function(buffer) {
                     instance.audios.push(new AudioSource(id, instance.audioContext, buffer));
                     counter++;
+                    instance.callback(Resources.state.LOADING_AUDIO + " (" + (counter + 1) + "/" + totalAudios + ")");
                     if(counter === totalAudios) {
                         instance.audios.sort(function(a, b) {
                             return a.id-b.id;
