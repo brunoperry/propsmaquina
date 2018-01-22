@@ -41,6 +41,7 @@ Then I copy/paste everything into the build/index.html `<style>` and `<script>` 
 
 * Pure JavaScript
 * [uglifyjs](https://www.npmjs.com/package/uglify-js-es6) - To generate the final js code.
+* [FileSaver](https://github.com/eligrey/FileSaver.js/) and [jszip](https://github.com/Stuk/jszip) - To save screen recordings.
 * [Blender](https://www.blender.org/) - For the 3d models.
 * [Affinity Designer](https://affinity.serif.com/en-gb/) - For the graphics.
 

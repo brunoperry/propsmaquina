@@ -6,10 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=660,user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
 
     <link rel="stylesheet" href="css/styles.css">
 
+    <script type="text/javascript" src="js/libs/FileSaver.js"></script>
+    <script type="text/javascript" src="js/libs/jszip.min.js"></script>
     <script type="text/javascript" src="js/Utils.js"></script>
+    <script type="text/javascript" src="js/FPS.js"></script>
     <script type="text/javascript" src="js/BezierCurve.js"></script>
     <script type="text/javascript" src="js/AudioSource.js"></script>
     <script type="text/javascript" src="js/AudioDebug.js"></script>
@@ -35,6 +39,7 @@
     <script type="text/javascript" src="js/Gradients.js"></script>
     <script type="text/javascript" src="js/Display.js"></script>
     <script type="text/javascript" src="js/Texture.js"></script>
+    <script type="text/javascript" src="js/ScreenRecorder.js"></script>
     <script type="text/javascript" src="js/Bitmap.js"></script>
     <script type="text/javascript" src="js/Mesh.js"></script>
     <script type="text/javascript" src="js/RenderContext.js"></script>
@@ -70,6 +75,7 @@
                 <div class="button-label" onclick="ui.gotoFX(12)">FX13</div>
             </div>
         </div>
+        <div id="record-button" class="button-label" onclick="ui.doScreenRecord(this)">RECORD</div>
         <div class="button-label" onclick="ui.toggleFullscreen(this)">FULLSCREEN</div>
         <div class="button-label" onclick="ui.toggleCurve(this)">CURVE</div>
         <div class="button-label" onclick="ui.toggleAnalyser(this)">ANALYSER</div>
@@ -105,6 +111,43 @@
         
         <label onclick="ui.showHideConsole(this)">CONSOLE:</label>
     </div> 
+
+
+    <div id="screen-recorder">
+
+        <div class="sr-container">
+            <label>WHICH FX?</label>
+            <select onchange="screenRecorder.onUI('select', this)">
+                <option value="all">ALL</option>
+                <option value="0">FX01</option>
+                <option value="1">FX02</option>
+                <option value="2">FX03</option>
+                <option value="3">FX04</option>
+                <option value="4">FX05</option>
+                <option value="5">FX06</option>
+                <option value="6">FX07</option>
+                <option value="7">FX08</option>
+                <option value="8">FX09</option>
+                <option value="9">FX10</option>
+                <option value="10">FX11</option>
+            </select>
+            <div class="buttons-container">
+                <button onclick="screenRecorder.onUI('record')" style="color: red">RECORD</button>
+                <button onclick="screenRecorder.onUI('cancel')">CANCEL</button>
+            </div>
+        </div>
+
+        <div class="sr-container">
+
+            <label>MESSAGE</label>
+            <div class="buttons-container">
+                <button onclick="screenRecorder.onUI('save')">SAVE</button>
+                <button onclick="screenRecorder.onUI('cancel')">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <label id="fps-label"></label>
     
 </body>
 </html>

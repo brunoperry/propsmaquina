@@ -14,6 +14,8 @@ class UI {
 
         this.isEditing = true;
 
+        this.recordButton = document.getElementById("record-button");
+
         this.setupLayout(null);
     }
 
@@ -90,6 +92,21 @@ class UI {
         } else {
             target.style.color = "black";
             document.getElementById("freq").style.display = "none";
+        }
+    }
+
+    doScreenRecord(target) {
+
+        this.callback(UI.Actions.SCREEN_RECORD);
+    }
+
+    toggleScreenRecordButton(val) {
+
+        console.log(val);
+        if(val) {
+            this.recordButton.style.color = "red";
+        } else {
+            this.recordButton.style.color = "black";
         }
     }
     onVolumeChange(value) {
@@ -179,6 +196,7 @@ UI.Actions = {
 
     STOP_PLAY: 0,
     GOTO_FRAME: 1,
+    SCREEN_RECORD: 2,
     TOGGLE_FULLSCREEN: 3,
     VOLUME_CHANGED: 4,
     TOGGLE_CURVE: 5,
