@@ -43,7 +43,7 @@ function startWild() {
 
     ui.setLayout(UI_prod.Layouts.START);
 
-    resources = new Resources(resourcesData, function(state) {
+    resources = new Resources(resourcesData, function(state, message) {
         var p = 0;
         switch(state) {
             case Resources.state.FONT:
@@ -56,7 +56,7 @@ function startWild() {
             break;
             case Resources.state.LOADING_AUDIO:
             p = 100 / 3;
-            state += "...";
+            state += (message + "...");
             break;
             case Resources.state.LOADING_MESHES:
             p = 100 / 2;
