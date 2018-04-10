@@ -1,0 +1,23 @@
+{
+    "meshes": [
+        {
+            "id": 0,
+            "type": "obj",
+            "src": "cube.obj"
+        }
+    ],
+    "textures": [
+        {
+            "id": 0,
+            "type": "jpg",
+            "src": "cube_texture.jpg"
+        }
+    ],
+    "audios": [
+        {
+            "id": 0,
+            "type": "mp3",
+            "src": "sound.mp3"
+        }
+    ]
+}
