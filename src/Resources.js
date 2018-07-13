@@ -1,5 +1,7 @@
 import OBJModel from "./loaders/ObjModel.js";
 import Mesh from "./components/Mesh.js";
+import Texture from "./core/Texture.js";
+import Bitmap from "./core/Bitmap.js";
 
 class Resources {
 
@@ -20,7 +22,7 @@ class Resources {
             }).
             then(texturesData => {
                 Resources.Textures = texturesData;
-                return Resources.loadTextures(Resources.Data.audios);
+                return Resources.loadAudios(Resources.Data.audios);
             }).
             then(audiosData => {
                 Resources.Audios = audiosData;
@@ -29,15 +31,6 @@ class Resources {
             catch(error => {
                 throw new Error(error);
             });
-    }
-
-    static getMeshes(mesheIDs) {
-
-        const meshes = [];
-        for (let i = 0; i < mesheIDs.length; i++) {
-            meshes.push(Resources.Meshes[mesheIDs[i]]);
-        }
-        return meshes;
     }
 
     static async loadMeshes(meshesData) {
@@ -54,29 +47,101 @@ class Resources {
             for (let i = 0; i < meshesData.length; i++) {
                 const mesh = meshesData[i];
                 let m = null;
-                switch(mesh.type) {
+                switch (mesh.type) {
                     case Resources.FileTypes.OBJ:
-                    m = new Mesh(new OBJModel(texts[i]).toIndexedModel());
-                    break;
+                        m = new Mesh(new OBJModel(texts[i]).toIndexedModel());
+                        break;
                     case Resources.FileTypes.FBX:
-                    break;
+                        break;
                 }
 
-                if(m) meshes.push(m);
+                if (m) meshes.push(m);
             }
             return meshes;
         }).
-        catch(error => {
-            throw new Error(error);  
-        });
+            catch(error => {
+                throw new Error(error);
+            });
     }
 
     static async loadTextures(texturesData) {
-        return "textures";
+
+        const textures = [];
+        return new Promise((resolve, reject) => {
+
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            const imageLoaded = (img) => {
+
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+
+                const srcData = ctx.getImageData(0, 0, img.width, img.height);
+                const copiedData = new Uint8ClampedArray(srcData.data.length);
+                copiedData.set(srcData.data);
+
+                const bitmap = new Bitmap({
+                    width: img.width,
+                    height: img.height,
+                    imgData: copiedData
+                });
+
+                textures.push(new Texture({
+                    id: img.id,
+                    bitmap: bitmap,
+                    name: img.name
+                }));
+                if (textures.length === texturesData.length) {
+                    resolve(textures);
+                }
+            }
+
+            for (let i = 0; i < texturesData.length; i++) {
+                const image = new Image();
+                image.name = texturesData[i].name;
+                image.id = texturesData[i].id;
+                image.onload = () => {
+                    imageLoaded(image);
+                }
+                image.src = Resources.TEXTURES_PATH + texturesData[i].src
+            }
+        });
     }
 
     static async loadAudios(audiosData) {
         return "audios";
+    }
+
+
+    //GETTERS
+    static getMeshes(meshIDs) {
+        const meshes = [];
+        for (let i = 0; i < meshIDs.length; i++) {
+            meshes.push(Resources.Meshes[meshIDs[i]]);
+        }
+        return meshes;
+    }
+    static getMesh(meshID) {
+        return Resources.Meshes[meshID];
+    }
+    static getTextures(textureIDs) {
+        const textures = [];
+        for (let i = 0; i < textureIDs.length; i++) {
+            textures.push(Resources.Textures[textureIDs[i]]);
+        }
+        return textures;
+    }
+    static getTexture(textureID) {
+        if (typeof (textureID) === "number") {
+            return Resources.Textures[textureID];
+        } else if (typeof (textureID === "string")) {
+            for (let i = 0; i < Resources.Textures.length; i++) {
+                const texture = Resources.Textures[i];
+                if (texture.name === textureID) return texture;
+            }
+        }
     }
 }
 

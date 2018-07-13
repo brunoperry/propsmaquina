@@ -17,7 +17,7 @@ class RenderContext extends Bitmap {
 
     clearDepthBuffer() {
 
-        for (let i = 0; i < zBuffer.length; i++) {
+        for (let i = 0; i < this.zBuffer.length; i++) {
             this.zBuffer[i] = Number.MAX_VALUE;
         }
     }
@@ -138,6 +138,95 @@ class RenderContext extends Bitmap {
 
         this.scanEdges(gradients, topToBottom, topToMiddle, handedness, texture);
         this.scanEdges(gradients, topToBottom, middleToBottom, handedness, texture);
+    }
+
+    scanEdges(gradients, a, b, handedness, texture) {
+
+        let left = a;
+        let right = b;
+
+        if(handedness) {
+            const tmp = left;
+            left = right;
+            right = tmp;
+        }
+        
+        const yStart = b.getYStart();
+        const yEnd = b.getYEnd();
+
+        for(let j = yStart; j < yEnd; j++) {
+            this.drawScanLine(gradients, left, right, j, texture);
+            left.step();
+            right.step();
+        }
+    }
+
+
+
+    drawScanLine(gradients, left, right, j, texture) {
+
+        const xMin = parseInt(Math.ceil(left.getX()));
+        const xMax = parseInt(Math.ceil(right.getX()));
+        const xPrestep = xMin - left.getX();
+
+        const xDist = right.getX() - left.getX();
+		const texCoordsXXStep = (right.getTexCoordX() - left.getTexCoordX()) / xDist;
+		const texCoordsYXStep = (right.getTexCoordY() - left.getTexCoordY()) / xDist;
+		const oneOverZXStep = (right.getOneOverZ() - left.getOneOverZ()) / xDist;
+		const depthXStep = (right.getDepth() - left.getDepth()) / xDist;
+        const lightAmtXStep = gradients.getLightAmtXStep();
+
+        let texCoordX = left.getTexCoordX() + texCoordsXXStep * xPrestep;
+        let texCoordY = left.getTexCoordY() + texCoordsYXStep * xPrestep;
+        let oneOverZ = left.getOneOverZ() + oneOverZXStep * xPrestep;
+        let depth = left.getDepth() + depthXStep * xPrestep;
+        let lightAmt = left.getLightAmt() + lightAmtXStep * xPrestep;
+        
+        for(let i = xMin; i < xMax; i++) {
+
+            const index = i + j * this.getWidth();
+
+            if(depth < this.zBuffer[index]) {
+                
+                this.zBuffer[index] = depth;
+                const z = 1.0 / oneOverZ;
+                const srcX = parseInt( ((texCoordX * z) * (texture.getWidth() - 1) + 0.5) );
+                const srcY = parseInt( ((texCoordY * z) * (texture.getHeight() - 1) + 0.5) );
+
+                if(texture.useLight) {
+                    this.copyPixel(i, j, srcX, srcY, texture, lightAmt * texture.getRadiance());
+                } else {
+                    this.copyPixel(i, j, srcX, srcY, texture, 1);
+                }
+
+
+                if(this.showEdges) {
+                    if(i === xMin || i + 1 === xMax) {
+                        this.drawPixel(i, j, 0xff, 0, 0, 0xff);
+                    }
+                }
+            }
+            
+            oneOverZ += oneOverZXStep;
+            texCoordX += texCoordsXXStep;
+            texCoordY += texCoordsYXStep;
+            depth += depthXStep;
+            lightAmt += lightAmtXStep;
+        }
+    }
+    
+    makeIterator(array) {
+        let nextIndex = 0;
+        return {
+            next: function() {
+                return nextIndex < array.length ?
+                    {value: array[nextIndex++], done: false} :
+                    {done: true};
+            },
+            hasNext: function() {
+                return nextIndex < array.length;
+            }
+        };
     }
 }
 

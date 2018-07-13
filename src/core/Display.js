@@ -12,7 +12,7 @@ class Display {
     }
 
     swapBuffers() {
-        
+
         this.displayImage.data.set(this.frameBuffer.components);
         this.context.putImageData(this.displayImage, 0, 0);
     }
@@ -21,8 +21,8 @@ class Display {
 
         this.canvasContainer.innerHTML = "";
 
-
         this.canvas = document.createElement("canvas");
+        this.canvas.id = "game-canvas";
         this.canvas.width = data.width;
         this.canvas.height = data.height;
 

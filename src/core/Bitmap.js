@@ -5,10 +5,9 @@ class Bitmap {
     constructor(data) {
 
         this.width = data.width;
-        this.height = data.width;
-        this.radiance = data.rad ? this.radiance = data.rad : this.radiance = 1;
+        this.height = data.height;
+        this.radiance = 1;
         this.name = data.name; data.name ? this.name = data.name : this.name = "no_name";
-        // this.mode = data.mode; data.mode ? this.mode = data.mode : this.mode = Bitmap.Modes.OPAQUE;
 
         this.useLight = true;
 
@@ -28,12 +27,10 @@ class Bitmap {
         dst.data.set(this.components);
         
         return new Bitmap({
-            w: this.width, 
-            h: this.height,
+            width: this.width, 
+            height: this.height,
             imgData: dst.data,
-            rad: this.radiance,
             name: this.name
-            // mode: this.mode
         });
     }
 
@@ -42,6 +39,7 @@ class Bitmap {
     }
 
     drawPixel(x, y, r, g, b, a) {
+
 
         var index = (x + y * this.width) * 4;
 

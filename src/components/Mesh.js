@@ -24,14 +24,13 @@ class Mesh {
     draw(context, viewProjection, transform, texture) {
 
         const mvp = viewProjection.multiply(transform);
-
         for(let i = 0; i < this.indices.length; i += 3) {
 
             context.drawTriangle(
 					this.vertices[this.indices[i]].transform(mvp, transform),
 					this.vertices[this.indices[i + 1]].transform(mvp, transform),
 					this.vertices[this.indices[i + 2]].transform(mvp, transform),
-                    texture.bmp);
+                    texture.bitmap);
         }
     }
 

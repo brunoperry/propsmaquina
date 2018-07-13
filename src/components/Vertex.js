@@ -1,3 +1,5 @@
+import Vec4 from "../core/math/Vec4.js";
+
 class Vertex {
 
     //Vec4, Vec4, Vec4

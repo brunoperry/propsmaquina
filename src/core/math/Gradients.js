@@ -1,3 +1,5 @@
+import Vec4 from "./Vec4.js";
+
 class Gradients {
 
     constructor(minYVert, midYVert, maxYVert) {

@@ -8,7 +8,8 @@
 
 These instructions will get you a copy of the project up and running on your local machine to try stuff around. See deploy for notes on how to make the final html file.
 
-For further details, check this entry on [pouet](http://www.pouet.net/prod.php?which=72468);
+For further details, check this entry on [pouet](http://www.pouet.net/prod.php?which=72468).
+Play it [here](https://brunoperry.net/demoscene/propsmaquina/).
 
 ### Prerequisites
 

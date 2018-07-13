@@ -10,6 +10,10 @@ class Util {
 
         return result;
     }
+
+    static toRadians(angle) {
+        return (angle / 180) * Math.PI;
+    }
 }
 
 export default Util;

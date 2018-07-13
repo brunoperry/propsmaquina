@@ -15,6 +15,10 @@ class GizmoEngine {
         this.game = null;
         this.isRunning = false;
 
+        if(data.fps) {
+            GizmoEngine.FPS = data.fps;
+        }
+
         this.callback({ action: GizmoEngine.Actions.LOADING_DATA });
         Resources.loadData(data.resourcesURL).then(result => {
             this.init();
@@ -24,8 +28,8 @@ class GizmoEngine {
     init() {
         this.display = new Display({
             view: document.getElementById("canvas-container"),
-            width: 480,
-            height: 320
+            width: 320,
+            height: 240
         });
         this.target = this.display.frameBuffer;
         this.callback({ action: GizmoEngine.Actions.DATA_LOADED });
@@ -34,6 +38,7 @@ class GizmoEngine {
     setGame(game) {
 
         this.game = game;
+        this.game.setRenderer(this.target);
     }
 
     run() {
@@ -42,7 +47,7 @@ class GizmoEngine {
 
         let frames = 0;
         let frameCounter = 0;
-        const frameRate = 1.0 / 60;
+        const frameRate = 1.0 / GizmoEngine.FPS;
 
         let instance = this;
 
@@ -73,6 +78,8 @@ class GizmoEngine {
 
                 Input.update();
                 instance.game.update(Time.getDelta());
+
+                this.display.swapBuffers();
 
                 if (Input.getKey(Keyboard.ESCAPE)) {
                     instance.pause();
@@ -108,5 +115,7 @@ GizmoEngine.Actions = {
     RUNNING: "gizmoenginerunning",
     PAUSED: "gizmoenginepaused"
 }
+
+GizmoEngine.FPS = 60;
 
 export default GizmoEngine

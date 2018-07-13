@@ -18,37 +18,32 @@ class OBJModel {
     parse(modelData) {
 
         const lines = modelData.split("\n");
-        for(let i = 0; i < lines.length; i++) {
+        for (let i = 0; i < lines.length; i++) {
             const tokens = Util.removeEmptyStrings(lines[i].split(" "));
 
-            if(tokens.length === 0 || tokens[0] === "#") {
+            if (tokens.length === 0 || tokens[0] === "#") {
                 continue;
-            }
-            else if(tokens[0] === "v") {
+            } else if (tokens[0] === "g") {
+                this.name = lines[i].split(" ")[1];
+            } else if (tokens[0] === "v") {
                 this.positions.push(new Vec4(parseFloat(tokens[1]),
-                                             parseFloat(tokens[2]),
-                                             parseFloat(tokens[3]),1));
-            } else if(tokens[0] === "vt") {
-                    
+                    parseFloat(tokens[2]),
+                    parseFloat(tokens[3]), 1));
+            } else if (tokens[0] === "vt") {
                 this.texCoords.push(new Vec4(parseFloat(tokens[1]),
-						                    1.0 -  parseFloat(tokens[2]),0,0));
-
-                                             
-            } else if(tokens[0] === "vn") {
-				this.normals.push(new Vec4( parseFloat(tokens[1]),
-                                            parseFloat(tokens[2]),
-                                            parseFloat(tokens[3]),0));
-			} else if(tokens[0] === "f") {
-
-				for(let j = 0; j < tokens.length - 3; j++) {
-
-					this.indices.push(this.parseOBJIndex(tokens[1]));
-					this.indices.push(this.parseOBJIndex(tokens[2 + j]));
-					this.indices.push(this.parseOBJIndex(tokens[3 + j]));
-				}
-			}
+                    1.0 - parseFloat(tokens[2]), 0, 0));
+            } else if (tokens[0] === "vn") {
+                this.normals.push(new Vec4(parseFloat(tokens[1]),
+                    parseFloat(tokens[2]),
+                    parseFloat(tokens[3]), 0));
+            } else if (tokens[0] === "f") {
+                for (let j = 0; j < tokens.length - 3; j++) {
+                    this.indices.push(this.parseOBJIndex(tokens[1]));
+                    this.indices.push(this.parseOBJIndex(tokens[2 + j]));
+                    this.indices.push(this.parseOBJIndex(tokens[3 + j]));
+                }
+            }
         }
-        // this.callback(this.toIndexedModel());
     }
     parseOBJIndex(token) {
 
@@ -56,16 +51,12 @@ class OBJModel {
         const result = new OBJIndex();
         result.setVertexIndex(parseInt(values[0]) - 1);
 
-        if(values.length > 1)
-        {
-            if(values[1] !== "")
-            {
+        if (values.length > 1) {
+            if (values[1] !== "") {
                 this.hasTexCoords = true;
                 result.setTexCoordIndex(parseInt(values[1]) - 1);
             }
-
-            if(values.length > 2)
-            {
+            if (values.length > 2) {
                 this.hasNormals = true;
                 result.setNormalIndex(parseInt(values[2]) - 1);
             }
@@ -76,84 +67,83 @@ class OBJModel {
 
     toIndexedModel() {
 
-        var result = new IndexedModel(this.id, this.name);
-		var normalModel = new IndexedModel();
-		var resultIndexMap = [];
-		var normalIndexMap = [];
-		var indexMap = [];
+        const result = new IndexedModel(this.id, this.name);
+        const normalModel = new IndexedModel();
+        const resultIndexMap = [];
+        const normalIndexMap = [];
+        const indexMap = [];
 
-		for(var i = 0; i < this.indices.length; i++) {
+        for (let i = 0; i < this.indices.length; i++) {
 
-			var currentIndex = this.indices[i];
+            const currentIndex = this.indices[i];
 
-			var currentPosition = this.positions[currentIndex.getVertexIndex()];
-			var currentTexCoord;
-			var currentNormal;
+            const currentPosition = this.positions[currentIndex.getVertexIndex()];
+            let currentTexCoord;
+            let currentNormal;
 
-			if(this.hasTexCoords)
-				currentTexCoord = this.texCoords[currentIndex.getTexCoordIndex()];
-			else
-				currentTexCoord = new Vec4(0,0,0,0);
+            if (this.hasTexCoords)
+                currentTexCoord = this.texCoords[currentIndex.getTexCoordIndex()];
+            else
+                currentTexCoord = new Vec4(0, 0, 0, 0);
 
-			if(this.hasNormals)
-				currentNormal = this.normals[currentIndex.getNormalIndex()];
-			else
-				currentNormal = new Vec4(0,0,0,0);
+            if (this.hasNormals)
+                currentNormal = this.normals[currentIndex.getNormalIndex()];
+            else
+                currentNormal = new Vec4(0, 0, 0, 0);
 
-			var modelVertexIndex = resultIndexMap[currentIndex];
+            let modelVertexIndex = resultIndexMap[currentIndex];
 
-			if(modelVertexIndex == null)
-			{
-				modelVertexIndex = result.getPositions().length;
-				resultIndexMap.push({
-                    currentIndex: currentIndex, 
-                    modelVertexIndex: modelVertexIndex });
+            if (modelVertexIndex == null) {
+                modelVertexIndex = result.getPositions().length;
+                resultIndexMap.push({
+                    currentIndex: currentIndex,
+                    modelVertexIndex: modelVertexIndex
+                });
 
-				result.getPositions().push(currentPosition);
-				result.getTexCoords().push(currentTexCoord);
-				if(this.hasNormals)
-					result.getNormals().push(currentNormal);
-			}
+                result.getPositions().push(currentPosition);
+                result.getTexCoords().push(currentTexCoord);
+                if (this.hasNormals)
+                    result.getNormals().push(currentNormal);
+            }
 
-			var normalModelIndex = normalIndexMap[currentIndex.getVertexIndex()];
+            let normalModelIndex = normalIndexMap[currentIndex.getVertexIndex()];
 
-			if(normalModelIndex === undefined) {
-				normalModelIndex = normalModel.getPositions().length;
-				normalIndexMap.push(
+            if (normalModelIndex === undefined) {
+                normalModelIndex = normalModel.getPositions().length;
+                normalIndexMap.push(
                     {
-                        currentIndex: currentIndex.getVertexIndex(), 
+                        currentIndex: currentIndex.getVertexIndex(),
                         normalModelIndex: normalModelIndex
                     });
 
-				normalModel.getPositions().push(currentPosition);
-				normalModel.getTexCoords().push(currentTexCoord);
-				normalModel.getNormals().push(currentNormal);
-				normalModel.getTangents().push(new Vec4(0,0,0,0));
-			}
+                normalModel.getPositions().push(currentPosition);
+                normalModel.getTexCoords().push(currentTexCoord);
+                normalModel.getNormals().push(currentNormal);
+                normalModel.getTangents().push(new Vec4(0, 0, 0, 0));
+            }
 
-			result.getIndices().push(modelVertexIndex);
-			normalModel.getIndices().push(normalModelIndex);
-			indexMap.push({
-                modelVertexIndex: modelVertexIndex, 
+            result.getIndices().push(modelVertexIndex);
+            normalModel.getIndices().push(normalModelIndex);
+            indexMap.push({
+                modelVertexIndex: modelVertexIndex,
                 normalModelIndex: normalModelIndex
             });
-		}
+        }
 
-		if(!this.hasNormals)
-		{
-			normalModel.calcNormals();
+        if (!this.hasNormals) {
+            normalModel.calcNormals();
 
-			for(var i = 0; i < result.getPositions().length; i++)
-				result.getNormals().push(normalModel.getNormals()[indexMap[i]]);
-		}
+            for (let i = 0; i < result.getPositions().length; i++)
+                result.getNormals().push(normalModel.getNormals()[indexMap[i]]);
+        }
 
-		normalModel.calcTangents();
+        normalModel.calcTangents();
 
-		for(var i = 0; i < result.getPositions().length; i++)
-			result.getTangents().push(normalModel.getTangents()[indexMap[i]]);
+        for (let i = 0; i < result.getPositions().length; i++)
+            result.getTangents().push(normalModel.getTangents()[indexMap[i]]);
 
-		return result;
-	}
+        return result;
+    }
 }
 
 class OBJIndex {
@@ -167,9 +157,9 @@ class OBJIndex {
     equals(obj) {
         const index = obj;
 
-        return  this.vertextIndex === index.vertextIndex &&
-                this.texCoordIndex === index.texCoordIndex &&
-                this.normalIndex === index.normalIndex;
+        return this.vertextIndex === index.vertextIndex &&
+            this.texCoordIndex === index.texCoordIndex &&
+            this.normalIndex === index.normalIndex;
     }
 
     hashCode() {
@@ -186,7 +176,7 @@ class OBJIndex {
     }
 
     // GETTERS SETTERS
-    
+
     getVertexIndex() { return this.vertextIndex; }
     getTexCoordIndex() { return this.texCoordIndex; }
     getNormalIndex() { return this.normalIndex; }

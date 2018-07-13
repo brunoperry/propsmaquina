@@ -1,6 +1,6 @@
 import Resources from "./src/Resources.js";
 import GizmoEngine from "./src/GizmoEngine.js";
-import Game from "./src/Game.js";
+import GameTemplate from "./src/game/GameTemplate.js";
 
 let gizmoEngine = null;
 
@@ -10,6 +10,21 @@ window.onload = (event) => {
         resourcesURL: "resources.json",
         callback: onGizmoEngine
     });
+
+    document.getElementById("play-pause-button").onclick = (event) => {
+        onPlayPause(event.target);
+    }
+}
+
+const onPlayPause = (elem) => {
+
+    if(gizmoEngine.isRunning) {
+        gizmoEngine.pause();
+        elem.innerHTML = "RUN";
+    } else {
+        gizmoEngine.run();
+        elem.innerHTML = "PAUSE";
+    }
 }
 
 const onGizmoEngine = (event) => {
@@ -21,10 +36,11 @@ const onGizmoEngine = (event) => {
 
         case GizmoEngine.Actions.DATA_LOADED:
 
-        const gizmoGame = new Game();
+        const gizmoGame = new GameTemplate();
         gizmoGame.setData("game.json").
         then(game => {
-            start(game);
+            gizmoEngine.setGame(game);
+            start();
         });
         break;
 
@@ -36,8 +52,7 @@ const onGizmoEngine = (event) => {
     }
 }
 
-const start = (game) => {
+const start = () => {
 
-    gizmoEngine.setGame(game);
     gizmoEngine.run();
 }
