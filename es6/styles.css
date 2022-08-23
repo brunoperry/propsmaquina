@@ -1,0 +1,53 @@
+:root {
+  --color-a: #30302f;
+  --color-b: #000000;
+  --color-c: #e4dfdf;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  image-rendering: pixelated;
+}
+
+html,
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-a);
+  width: 100%;
+  height: 100%;
+}
+body {
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+canvas {
+  background-color: var(--color-b);
+  transform-origin: top left;
+  transform: scale(3);
+}
+button {
+  flex: 1;
+  color: var(--color-c);
+  background-color: var(--color-b);
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:active {
+  transform: scale(0.9);
+}
+
+#controls {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  gap: 20px;
+  max-height: 128px;
+  max-width: 1000px;
+}

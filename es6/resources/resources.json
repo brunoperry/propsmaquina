@@ -1,0 +1,15 @@
+{
+  "meshes": [
+    {
+      "name": "cube",
+      "url": "cube.obj"
+    }
+  ],
+  "textures": [
+    {
+      "name": "map",
+      "url": "map.jpg"
+    }
+  ],
+  "audios": []
+}
