@@ -35,7 +35,14 @@ export default class Bitmap {
     this.components[index + 3] = a;
   }
 
-  //params: int, int, int, int, Bitmap, float
+  /** Copies a pixel from a bitmap to components
+   * @param {number} destX x position of the target bitmap (this);
+   * @param {number} destY y position of the target bitmap (this);
+   * @param {number} srcX x position of the source bitmap;
+   * @param {number} srcY y position of the source bitmap (this);
+   * @param {Bitmap} src the source bitmap;
+   * @param {number} lightAmt the light amount for the pixel;
+   */
   copyPixel(destX, destY, srcX, srcY, src, lightAmt) {
     const destIndex = parseInt(destX + destY * this.width) * 4;
     const srcIndex = parseInt(srcX + srcY * src.width) * 4;

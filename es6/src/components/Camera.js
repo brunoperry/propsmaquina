@@ -3,6 +3,12 @@ import PVector from "../math/GVector.js";
 import Transform from "./Transform.js";
 
 export default class Camera {
+  /** 3D Camera class
+   * @param {number} fov field of view. Defaults to 70
+   * @param {number} aspectRatio aspect ratio for the camera. Defaults to 1.3
+   * @param {number} zNear how close it clips. Defaults to 0.1
+   * @param {number} zFar how far it clips. Defaults to 1000
+   */
   constructor({ fov = 70, aspectRatio = 1.3, zNear = 0.1, zFar = 1000 }) {
     this.transform = new Transform();
     this.projection = GMatrix.perspective(fov, aspectRatio, zNear, zFar);

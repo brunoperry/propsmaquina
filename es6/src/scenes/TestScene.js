@@ -12,13 +12,22 @@ export default class TestScene extends Scene {
       mesh: Resources.getMesh("cube"),
       texture: Resources.getTexture("map"),
     });
+
+    /** DEBUG START */
+    // for (let i = 0; i < 10; i++) {
+    //   this.addObject3D(
+    //     new Object3D({
+    //       mesh: Resources.getMesh("cube"),
+    //       texture: Resources.getTexture("map"),
+    //     })
+    //   );
+    // }
+    /** DEBUG END  */
     this.addObject3D(this.#cube);
   }
 
   update(tick) {
-    super.update(tick);
-
-    console.log(-tick);
     this.#cube.translate(new GVector(0, 0, -tick));
+    super.update(tick);
   }
 }

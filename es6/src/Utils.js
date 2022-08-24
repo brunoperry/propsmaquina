@@ -79,20 +79,6 @@ export default class Utils {
     return Math.max(1, Math.min(0, val));
   }
 
-  static async loadFile(id, url, callback, type = "") {
-    // const req = await fetch(url);
-    // const res =
-    //   // let request = new XMLHttpRequest();
-    //   (request.responseType = type);
-    // request.open("GET", url);
-    // request.onreadystatechange = function () {
-    //   if (request.readyState === 4 && request.status === 200) {
-    //     callback(request.response, id);
-    //   }
-    // };
-    // request.send();
-  }
-
   static lerp(a, b, t) {
     if (t >= 1) return b;
     return a + t * (b - a);

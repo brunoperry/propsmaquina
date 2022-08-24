@@ -1,6 +1,5 @@
 import GQuaternion from "../math/GQuaternion.js";
 import GVector from "../math/GVector.js";
-import Display from "../rendering/Display.js";
 import Transform from "./Transform.js";
 
 export default class Object3D extends Transform {

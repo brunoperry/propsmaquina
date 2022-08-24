@@ -11,11 +11,11 @@ export default class Display {
     this.#graphics = this.#canvas.getContext("2d");
     this.reset();
 
-    this.#renderer.drawPixel(10, 10, 255, 0, 0, 255);
-    this.swapBuffers();
+    // this.#renderer.drawPixel(10, 10, 255, 0, 0, 255);
+    // this.swapBuffers();
   }
 
-  #setupLayout() {
+  setupLayout() {
     let dim = this.#canvas.getBoundingClientRect();
     let styleToFix = this.#canvas.parentElement.style;
 
@@ -25,6 +25,7 @@ export default class Display {
 
   update(tris) {
     this.clear();
+
     this.#renderer.drawTriangles(tris);
     this.swapBuffers();
   }
@@ -40,7 +41,7 @@ export default class Display {
   }
 
   reset() {
-    this.#setupLayout();
+    this.setupLayout();
     this.#renderer = new Renderer(this.#canvas.width, this.#canvas.height);
     this.#renderer.clear(0x00);
     this.#frameBuffer = new ImageData(this.#canvas.width, this.#canvas.height);

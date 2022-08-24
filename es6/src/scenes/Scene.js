@@ -4,6 +4,8 @@ import Display from "../rendering/Display.js";
 
 export default class Scene {
   #display;
+
+  isRunning = false;
   camera;
 
   #objects3D = [];

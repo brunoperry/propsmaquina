@@ -1,3 +1,5 @@
+import GMatrix from "./GMatrix.js";
+
 export default class GVector {
   constructor(x = 0, y = 0, z = 0, w = 1) {
     this.x = x;
@@ -67,6 +69,10 @@ export default class GVector {
     return new GVector(w.getX(), w.getY(), w.getZ(), 1.0);
   }
 
+  toTranslationMatrix() {
+    return new GMatrix().translation(this.x, this.y, this.z);
+  }
+
   add(r) {
     return new GVector(this.x + r, this.y + r, this.z + r, this.w + r);
   }
@@ -99,18 +105,18 @@ export default class GVector {
     return new GVector(this.x / r, this.y / r, this.z / r, this.w / r);
   }
 
-  getX() {
-    return this.x;
-  }
-  getY() {
-    return this.y;
-  }
-  getZ() {
-    return this.z;
-  }
-  getW() {
-    return this.w;
-  }
+  // getX() {
+  //   return this.x;
+  // }
+  // getY() {
+  //   return this.y;
+  // }
+  // getZ() {
+  //   return this.z;
+  // }
+  // getW() {
+  //   return this.w;
+  // }
 
   //static
   static up() {

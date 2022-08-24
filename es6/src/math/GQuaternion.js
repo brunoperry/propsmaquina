@@ -209,24 +209,23 @@ export default class GQuaternion {
   }
 
   toRotationMatrix() {
-    const forward = new GVector(
-      2.0 * (this.x * this.z - this.w * this.y),
-      2.0 * (this.y * this.z + this.w * this.x),
-      1.0 - 2.0 * (this.x * this.x + this.y * this.y)
+    return new GMatrix().rotationFUR(
+      new GVector(
+        2.0 * (this.x * this.z - this.w * this.y),
+        2.0 * (this.y * this.z + this.w * this.x),
+        1.0 - 2.0 * (this.x * this.x + this.y * this.y)
+      ),
+      new GVector(
+        2.0 * (this.x * this.y + this.w * this.z),
+        1.0 - 2.0 * (this.x * this.x + this.z * this.z),
+        2.0 * (this.y * this.z - this.w * this.x)
+      ),
+      new GVector(
+        1.0 - 2.0 * (this.y * this.y + this.z * this.z),
+        2.0 * (this.x * this.y - this.w * this.z),
+        2.0 * (this.x * this.z + this.w * this.y)
+      )
     );
-
-    var up = new GVector(
-      2.0 * (this.x * this.y + this.w * this.z),
-      1.0 - 2.0 * (this.x * this.x + this.z * this.z),
-      2.0 * (this.y * this.z - this.w * this.x)
-    );
-    var right = new GVector(
-      1.0 - 2.0 * (this.y * this.y + this.z * this.z),
-      2.0 * (this.x * this.y - this.w * this.z),
-      2.0 * (this.x * this.z + this.w * this.y)
-    );
-
-    return new GMatrix().rotationFUR(forward, up, right);
   }
 
   dot(r) {

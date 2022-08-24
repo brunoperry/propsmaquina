@@ -17,9 +17,9 @@ export default class Transform {
     this.scale = scale;
   }
 
-  clone() {
-    return new Transform(this.position, this.rotation, this.scale);
-  }
+  // clone() {
+  //   return new Transform(this.position, this.rotation, this.scale);
+  // }
 
   //params: Vec4 returns: Transform
   translate(pos) {
@@ -48,12 +48,12 @@ export default class Transform {
 
   //Vec4, Vec4 / returns: Quaternion
   getLookAtRotation(point, up) {
-    var mat = new GMatrix();
-    var v = point.subtractVec(this.position).normalized();
-
-    return new Quaternion({
+    return new GQuaternion({
       type: Quaternion.Type.INIT_MAT,
-      mat: mat.rotationFU(v, up),
+      mat: new GMatrix().rotationFU(
+        point.subtractVec(this.position).normalized(),
+        up
+      ),
     });
   }
 
@@ -65,7 +65,6 @@ export default class Transform {
       this.position.z
     );
     const rotationMatrix = this.rotation.toRotationMatrix();
-
     const scaleMatrix = new GMatrix().scale(
       this.scale.x,
       this.scale.y,

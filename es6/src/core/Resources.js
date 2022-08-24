@@ -2,7 +2,6 @@ import Mesh from "../components/Mesh.js";
 import Texture from "../rendering/Texture.js";
 import OBJLoader from "../loaders/OBJLoader.js";
 import ImageLoader from "../loaders/ImageLoader.js";
-import Utils from "../Utils.js";
 import Bitmap from "../rendering/Bitmap.js";
 
 export default class Resources {

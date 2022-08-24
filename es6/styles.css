@@ -2,12 +2,18 @@
   --color-a: #30302f;
   --color-b: #000000;
   --color-c: #e4dfdf;
+  --color-d: #d90000;
+
+  --speed: 0.02s;
+
+  --font-family: Arial;
 }
 
 * {
   padding: 0;
   margin: 0;
   image-rendering: pixelated;
+  font-family: var(--font-family);
 }
 
 html,
@@ -31,15 +37,22 @@ canvas {
 }
 button {
   flex: 1;
-  color: var(--color-c);
-  background-color: var(--color-b);
+  color: var(--color-a);
+  background-color: var(--color-c);
   border: none;
   font-size: 2rem;
   font-weight: bold;
+  text-transform: uppercase;
   cursor: pointer;
+  border-radius: 5px;
+  transition: transform var(--speed) ease-out,
+    background-color var(--speed) ease-out;
 }
-button:active {
+button:active,
+button.active {
   transform: scale(0.9);
+  background-color: var(--color-d);
+  color: var(--color-c);
 }
 
 #controls {
@@ -48,6 +61,17 @@ button:active {
   justify-content: center;
   width: 50%;
   gap: 20px;
-  max-height: 128px;
+  max-height: 92px;
   max-width: 1000px;
+}
+
+#canvas-container {
+  position: relative;
+}
+
+#fps {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: var(--color-c);
 }

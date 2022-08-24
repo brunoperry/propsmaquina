@@ -104,10 +104,10 @@ class IndexedModel {
   }
 
   calcTangents() {
-    for (var i = 0; i < this.indices.length; i += 3) {
-      var i0 = this.indices[i];
-      var i1 = this.indices[i + 1];
-      var i2 = this.indices[i + 2];
+    for (let i = 0; i < this.indices.length; i += 3) {
+      const i0 = this.indices[i];
+      const i1 = this.indices[i + 1];
+      const i2 = this.indices[i + 2];
 
       if (
         this.positions[i0] === undefined ||
@@ -116,33 +116,27 @@ class IndexedModel {
       )
         continue;
 
-      var edge1 = this.positions[i1].subtractVec(this.positions[i0]);
-      var edge2 = this.positions[i2].subtractVec(this.positions[i0]);
+      const edge1 = this.positions[i1].subtractVec(this.positions[i0]);
+      const edge2 = this.positions[i2].subtractVec(this.positions[i0]);
 
-      var deltaU1 = this.texCoords[i1].getX() - this.texCoords[i0].getX();
-      var deltaV1 = this.texCoords[i1].getY() - this.texCoords[i0].getY();
-      var deltaU2 = this.texCoords[i2].getX() - this.texCoords[i0].getX();
-      var deltaV2 = this.texCoords[i2].getY() - this.texCoords[i0].getY();
+      const deltaU1 = this.texCoords[i1].x - this.texCoords[i0].x;
+      const deltaV1 = this.texCoords[i1].y - this.texCoords[i0].y;
+      const deltaU2 = this.texCoords[i2].x - this.texCoords[i0].x;
+      const deltaV2 = this.texCoords[i2].y - this.texCoords[i0].y;
 
-      var dividend = deltaU1 * deltaV2 - deltaU2 * deltaV1;
-      var f = dividend == 0 ? 0.0 : 1.0 / dividend;
+      const dividend = deltaU1 * deltaV2 - deltaU2 * deltaV1;
+      let f = dividend == 0 ? 0.0 : 1.0 / dividend;
 
-      var tangent = new GVector(
-        f * (deltaV2 * edge1.getX() - deltaV1 * edge2.getX()),
-        f * (deltaV2 * edge1.getY() - deltaV1 * edge2.getY()),
-        f * (deltaV2 * edge1.getZ() - deltaV1 * edge2.getZ()),
-        0
+      const tangent = new GVector(
+        f * (deltaV2 * edge1.x - deltaV1 * edge2.x),
+        f * (deltaV2 * edge1.y - deltaV1 * edge2.y),
+        f * (deltaV2 * edge1.z - deltaV1 * edge2.z)
       );
 
       this.tangents.push(i0, this.tangents[i0].addVec(tangent));
       this.tangents.push(i1, this.tangents[i1].addVec(tangent));
       this.tangents.push(i2, this.tangents[i2].addVec(tangent));
     }
-
-    // for(var i = 0; i < this.tangents.length; i++)
-
-    // console.log(this.tangents[i]);
-    // this.tangents.push(i, this.tangents[i].normalized());
   }
   getTangents() {
     return this.tangents;

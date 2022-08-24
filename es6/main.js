@@ -1,20 +1,27 @@
-import Resources from "./src/core/Resources.js";
+import FPSCounter from "./src/components/FPSCounter.js";
+import GizmoEngine from "./src/core/GizmoEngine.js";
 import TestScene from "./src/scenes/TestScene.js";
 
-let scene;
-let animID = null;
-let tick = 0;
+//UI
+let playPauseButton;
+let fpsLabel;
 
 window.onload = async () => {
-  await Resources.init();
-  scene = new TestScene();
+  //GIZMO3D
+  await GizmoEngine.init();
+  GizmoEngine.addScene(new TestScene());
+  GizmoEngine.addComponent({
+    component: new FPSCounter((fps) => {
+      fpsLabel.innerText = `FPS: ${fps}`;
+    }),
+  });
 
-  document.querySelector("#play").onclick = () => {
-    start();
-  };
+  //UI
+  playPauseButton = document.querySelector("#playpause");
+  fpsLabel = document.querySelector("#fps");
 
-  document.querySelector("#pause").onclick = () => {
-    pause();
+  playPauseButton.onclick = () => {
+    GizmoEngine.isRunning ? pause() : start();
   };
 
   document.querySelector("#stop").onclick = () => {
@@ -22,25 +29,17 @@ window.onload = async () => {
   };
 };
 
-const loop = () => {
-  if (!animID) return;
-
-  tick++;
-  scene.update(tick);
-  animID = requestAnimationFrame(loop);
-};
-
 const start = () => {
-  if (animID) return;
-  animID = window.requestAnimationFrame(loop);
+  playPauseButton.innerText = "pause";
+  playPauseButton.className = "active";
+  GizmoEngine.start();
 };
 const pause = () => {
-  if (!animID) return;
-  window.cancelAnimationFrame(animID);
-  animID = null;
+  playPauseButton.innerText = "play";
+  playPauseButton.className = "";
+  GizmoEngine.pause();
 };
 const stop = () => {
-  if (!animID) return;
   pause();
-  tick = 0;
+  GizmoEngine.stop();
 };

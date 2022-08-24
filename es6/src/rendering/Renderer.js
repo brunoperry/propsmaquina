@@ -1,5 +1,3 @@
-// import Display from "./Display.js";
-
 import Edge from "../math/Edge.js";
 import GMatrix from "../math/GMatrix.js";
 import Gradients from "../math/Gradients.js";
@@ -119,7 +117,7 @@ export class Renderer extends Bitmap {
   drawTriangle(triangle) {
     this.#currentTexture = triangle.texture;
     if (triangle.isInsideViewFrustum) {
-      this.fillTriangle(
+      this.#fillTriangle(
         triangle.a,
         triangle.b,
         triangle.c,
@@ -129,15 +127,14 @@ export class Renderer extends Bitmap {
     }
 
     this.vertices = [triangle.a, triangle.b, triangle.c];
-
     if (
-      this.clipPolygonAxis(this.vertices, 0) &&
-      this.clipPolygonAxis(this.vertices, 1) &&
-      this.clipPolygonAxis(this.vertices, 2)
+      this.#clipPolygonAxis(0) &&
+      this.#clipPolygonAxis(1) &&
+      this.#clipPolygonAxis(2)
     ) {
       const tex = triangle.texture;
       for (var i = 1; i < this.vertices.length - 1; i++) {
-        this.fillTriangle(
+        this.#fillTriangle(
           this.vertices[0],
           this.vertices[i],
           this.vertices[i + 1],
@@ -147,22 +144,24 @@ export class Renderer extends Bitmap {
     }
   }
 
-  //Vertex[], Vertex[], int
-  clipPolygonAxis(vertices, componentindex) {
-    var auxillaryList = [];
+  /** FUNC
+   * @param {number} componentindex some number
+   * @return {boolean}
+   */
+  #clipPolygonAxis(componentindex) {
+    let auxillaryList = [];
 
-    this.clipPolygonComponent(
+    this.#clipPolygonComponent(
       this.vertices,
       componentindex,
       1.0,
       auxillaryList
     );
-    this.vertices = [];
 
-    if (auxillaryList.length === 0) {
-      return false;
-    }
-    this.clipPolygonComponent(
+    if (!auxillaryList.length) return false;
+
+    this.vertices = [];
+    this.#clipPolygonComponent(
       auxillaryList,
       componentindex,
       -1.0,
@@ -171,43 +170,36 @@ export class Renderer extends Bitmap {
 
     return this.vertices.length > 0;
   }
-  //Vertex[], int, float, Vertex[]
-  clipPolygonComponent(vertices, componentIndex, componentFactor, result) {
-    var previousVertex = vertices[vertices.length - 1];
-    var previousComponent =
-      previousVertex.get(componentIndex) * componentFactor;
-    var previousInside =
-      previousComponent <= previousVertex.getPosition().getW();
+  #clipPolygonComponent(vertices, componentIndex, componentFactor, result) {
+    let prevVrtx = vertices[vertices.length - 1];
+    let prevComp = prevVrtx.get(componentIndex) * componentFactor;
+    let prevInside = prevComp <= prevVrtx.position.w;
 
-    var it = this.makeIterator(vertices);
-    while (it.hasNext()) {
-      var currentVertex = it.next().value;
-      var currentComponent =
-        currentVertex.get(componentIndex) * componentFactor;
-      var currentInside =
-        currentComponent <= currentVertex.getPosition().getW();
+    for (let i = 0; i < vertices.length; i++) {
+      const vrtx = vertices[i];
 
-      if (currentInside ^ previousInside) {
-        var lerpAmt =
-          (previousVertex.getPosition().getW() - previousComponent) /
-          (previousVertex.getPosition().getW() -
-            previousComponent -
-            (currentVertex.getPosition().getW() - currentComponent));
+      const currComp = vrtx.get(componentIndex) * componentFactor;
+      const currInside = currComp <= vrtx.position.w;
 
-        result.push(previousVertex.lerp(currentVertex, lerpAmt));
+      if (currInside ^ prevInside) {
+        result.push(
+          prevVrtx.lerp(
+            vrtx,
+            (prevVrtx.position.w - prevComp) /
+              (prevVrtx.position.w - prevComp - (vrtx.position.w - currComp))
+          )
+        );
       }
 
-      if (currentInside) {
-        result.push(currentVertex);
-      }
+      if (currInside) result.push(vrtx);
 
-      previousVertex = currentVertex;
-      previousComponent = currentComponent;
-      previousInside = currentInside;
+      prevVrtx = vrtx;
+      prevComp = currComp;
+      prevInside = currInside;
     }
   }
 
-  fillTriangle(v1, v2, v3, texture) {
+  #fillTriangle(v1, v2, v3) {
     const screenSpaceTransform = new GMatrix().screenSpaceTransform(
       this.width / 2,
       this.height / 2
@@ -224,9 +216,7 @@ export class Renderer extends Bitmap {
       .transform(screenSpaceTransform, identity)
       .perspectiveDivide();
 
-    if (minYVert.triangleAreaTimesTwo(maxYVert, midYVert) >= 0) {
-      return;
-    }
+    if (minYVert.triangleAreaTimesTwo(maxYVert, midYVert) >= 0) return;
 
     if (maxYVert.get(1) < midYVert.get(1)) {
       const tmp = maxYVert;
@@ -254,26 +244,7 @@ export class Renderer extends Bitmap {
     const handedness = minYVert.triangleAreaTimesTwo(maxYVert, midYVert) >= 0;
     this.#scanEdges(gradients, topToBottom, topToMiddle, handedness);
     this.#scanEdges(gradients, topToBottom, middleToBottom, handedness);
-
-    // this.scanTriangle(
-    //   minYVert,
-    //   midYVert,
-    //   maxYVert,
-    //   minYVert.triangleAreaTimesTwo(maxYVert, midYVert) >= 0,
-    //   texture
-    // );
   }
-
-  // #scanTriangle(minYVert, midYVert, maxYVert, handedness) {
-  //   var gradients = new Gradients(minYVert, midYVert, maxYVert);
-
-  //   var topToBottom = new Edge(gradients, minYVert, maxYVert, 0);
-  //   var topToMiddle = new Edge(gradients, minYVert, midYVert, 0);
-  //   var middleToBottom = new Edge(gradients, midYVert, maxYVert, 1);
-
-  //   this.scanEdges(gradients, topToBottom, topToMiddle, handedness);
-  //   this.scanEdges(gradients, topToBottom, middleToBottom, handedness);
-  // }
 
   #scanEdges(gradients, a, b, handedness) {
     let left = a;
@@ -290,15 +261,6 @@ export class Renderer extends Bitmap {
       left.step();
       right.step();
     }
-
-    // var yStart = b.getYStart();
-    // var yEnd = b.getYEnd();
-
-    // for (var j = yStart; j < yEnd; j++) {
-    //   this.drawScanLine(gradients, left, right, j, texture);
-    //   left.step();
-    //   right.step();
-    // }
   }
 
   #drawScanLine(gradients, left, right, j) {
@@ -341,19 +303,5 @@ export class Renderer extends Bitmap {
       depth += depthXStep;
       lightAmt += lightAmtXStep;
     }
-  }
-
-  makeIterator(array) {
-    let nextIndex = 0;
-    return {
-      next: () => {
-        return nextIndex < array.length
-          ? { value: array[nextIndex++], done: false }
-          : { done: true };
-      },
-      hasNext: () => {
-        return nextIndex < array.length;
-      },
-    };
   }
 }

@@ -2,21 +2,21 @@ import GVector from "../math/GVector.js";
 
 export default class Vertex {
   //GVector, GVector, GVector
-  constructor(pos, textCoords = new GVector(), normal = new GVector()) {
+  constructor(pos, texCoords = new GVector(), normal = new GVector()) {
     this.position = pos;
-    this.textCoords = textCoords;
+    this.texCoords = texCoords;
     this.normal = normal;
   }
 
   clone() {
-    return new Vertex(this.position, this.textCoords, this.normal);
+    return new Vertex(this.position, this.texCoords, this.normal);
   }
 
   //param: Mat4, Mat4 returns: Vertex
   transform(positionTransform, normalTransform) {
     return new Vertex(
       positionTransform.transform(this.position),
-      this.textCoords,
+      this.texCoords,
       normalTransform.transform(this.normal)
     );
   }
@@ -29,7 +29,7 @@ export default class Vertex {
       this.position.w
     );
 
-    return new Vertex(v, this.textCoords, this.normal);
+    return new Vertex(v, this.texCoords, this.normal);
   }
 
   isInsideViewFrustum() {
@@ -54,7 +54,7 @@ export default class Vertex {
   lerp(other, lerpAmt) {
     return new Vertex(
       this.position.lerp(other.getPosition(), lerpAmt),
-      this.textCoords.lerp(other.getTexCoords(), lerpAmt),
+      this.texCoords.lerp(other.getTexCoords(), lerpAmt),
       this.normal.lerp(other.getNormal(), lerpAmt)
     );
   }
@@ -89,18 +89,18 @@ export default class Vertex {
   }
 
   // GETTERS SETTERS
-  getPosition() {
-    return this.position;
-  }
-  setPosition(pos) {
-    this.position = pos;
-  }
-  getTexCoords() {
-    return this.textCoords;
-  }
-  getNormal() {
-    return this.normal;
-  }
+  // getPosition() {
+  //   return this.position;
+  // }
+  // setPosition(pos) {
+  //   this.position = pos;
+  // }
+  // getTexCoords() {
+  //   return this.texCoords;
+  // }
+  // getNormal() {
+  //   return this.normal;
+  // }
 
   get x() {
     return this.position.x;
