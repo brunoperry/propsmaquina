@@ -1,73 +1,77 @@
 class Object3D {
+  constructor(data, useLight = true) {
+    this.mesh = data.mesh;
+    this.texture = data.texture;
 
-    constructor(data, useLight=true) {
-
-        this.mesh = data.mesh;
-        this.texture = data.texture;
-
-        if(data.rad !== undefined) {
-            this.texture.setRadiance(data.rad);
-        }
-        else {
-            this.texture.radiance = 1;
-        }
-
-        this.visible = true;
-        this.texture.useLight(useLight);
-
-        this.reset();
+    if (data.rad !== undefined) {
+      this.texture.setRadiance(data.rad);
+    } else {
+      this.texture.radiance = 1;
     }
 
-    //params: Display, Mat4
-    update(renderer, viewPerspective, tick) {
+    this.visible = true;
+    this.texture.useLight(useLight);
 
-        if(!this.visible) return;
+    this.reset();
+  }
 
-        // console.log(this.texture)
-        this.mesh.draw( renderer,
-                        viewPerspective,
-                        this.transform.getTransformation(),
-                        this.texture );
-    }
+  //params: Display, Mat4
+  update(renderer, viewPerspective, tick) {
+    if (!this.visible) return;
 
-    reset() {
-        this.transform = new Transform(new Vec4(0,0,0), new Quaternion(), new Vec4(1,1,1));
-    }
+    // console.log(this.texture)
 
-    setMainTexture(texID) {
+    // console.log("viewModel", this.transform.getTransformation().toString);
+    console.log("-------");
 
-        this.texture.setMainTexture(texID);
-    }
+    this.mesh.draw(
+      renderer,
+      viewPerspective,
+      this.transform.getTransformation(),
+      this.texture
+    );
+  }
 
-    //params: Vec4
-    setPos(pos) {
-        this.transform = this.transform.setPos(pos);
-    }
-    getPos() {
+  reset() {
+    this.transform = new Transform(
+      new Vec4(0, 0, 0),
+      new Quaternion(),
+      new Vec4(1, 1, 1)
+    );
+  }
 
-        return this.transform.getPos();
-    }
+  setMainTexture(texID) {
+    this.texture.setMainTexture(texID);
+  }
 
-    //params: Quaternion
-    setRotate(rot) {
-        this.transform = this.transform.rotate(rot);
-    }
+  //params: Vec4
+  setPos(pos) {
+    this.transform = this.transform.setPos(pos);
+  }
+  getPos() {
+    return this.transform.getPos();
+  }
 
-    //params: Vec4
-    setScale(scale) {
-        this.transform = this.transform.setScale(scale);
-    }
+  //params: Quaternion
+  setRotate(rot) {
+    this.transform = this.transform.rotate(rot);
+  }
 
-    get name() {
-        return this.mesh.name;
-    }
+  //params: Vec4
+  setScale(scale) {
+    this.transform = this.transform.setScale(scale);
+  }
 
-    setRadiance(rad) {
-        this.texture.bmp.setRadiance(rad);
-    }
+  get name() {
+    return this.mesh.name;
+  }
 
-    //params: Vec4, Vec4
-    lookAt(dir, up) {
-        this.transform = this.transform.lookAt(dir, up);
-    }
+  setRadiance(rad) {
+    this.texture.bmp.setRadiance(rad);
+  }
+
+  //params: Vec4, Vec4
+  lookAt(dir, up) {
+    this.transform = this.transform.lookAt(dir, up);
+  }
 }
